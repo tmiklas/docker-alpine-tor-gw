@@ -22,8 +22,8 @@ ExitPolicy reject *:*
 
 ### Build information
 
-* Base OS: Alpine v3.3
-* Tor version: [0.2.7.6](https://www.torproject.org/dist/tor-0.2.7.6.tar.gz) compiled from source
+* Base OS: Alpine v3.9
+* Tor version: [0.2.9.13](https://dist.torproject.org/tor-0.2.9.13.tar.gz) compiled from source
 
 
 EOT

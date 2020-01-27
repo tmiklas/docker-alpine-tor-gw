@@ -1,10 +1,10 @@
-FROM alpine:3.3
+FROM alpine:3.9
 MAINTAINER @tomaszmiklas
-RUN apk add --no-cache ca-certificates gcc build-base libevent-dev openssl-dev tar wget && \
+RUN apk add --no-cache ca-certificates gcc build-base libevent-dev openssl-dev tar wget zlib-dev && \
 cd /tmp && \
-wget -q https://www.torproject.org/dist/tor-0.2.7.6.tar.gz && \
-tar zxf tor-0.2.7.6.tar.gz && \
-cd tor-0.2.7.6 && \
+wget -q https://dist.torproject.org/tor-0.2.9.13.tar.gz && \
+tar zxf tor-0.2.9.13.tar.gz && \
+cd tor-0.2.9.13 && \
 ./configure && \
 make && \
 make install && \
