@@ -13,17 +13,15 @@ This container provides:
 `/etc/tor/torrc`:
  
 ```
-SocksPort 9050 
-SocksBindAddress 0.0.0.0 
-DNSPort 53 
-DNSListenAddress 0.0.0.0
+SocksPort 0.0.0.0:9050 
+DNSPort 0.0.0.0:53 
 ExitPolicy reject *:*
 ```
 
 ### Build information
 
 * Base OS: Alpine v3.9
-* Tor version: [0.2.9.13](https://dist.torproject.org/tor-0.2.9.13.tar.gz) compiled from source
+* Tor version: [0.4.2.5](https://dist.torproject.org/tor-0.4.2.5.tar.gz) compiled from source
 
 
 EOT
