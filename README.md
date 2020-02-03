@@ -50,7 +50,7 @@ Please read the Tor documentation before changing exit policies!
 
 ## Build information
 
-* Base OS: Alpine v3.9
+* Base OS: Alpine LATEST (auto-rebuild on base image change - should always be current)
 * Tor version: [0.4.2.6](https://dist.torproject.org/tor-0.4.2.6.tar.gz) compiled from source
 * Image exposed ports: 
 	* 9050/tcp 

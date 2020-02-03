@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:latest
 MAINTAINER @tomaszmiklas
 RUN apk add --no-cache ca-certificates gcc build-base libevent-dev openssl-dev tar wget zlib-dev xz-dev xz-libs bash && \
 cd /tmp && \
