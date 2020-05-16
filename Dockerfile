@@ -2,9 +2,9 @@ FROM alpine:latest
 MAINTAINER @tomaszmiklas
 RUN apk add --no-cache ca-certificates gcc build-base libevent-dev openssl-dev tar wget zlib-dev xz-dev xz-libs bash && \
 cd /tmp && \
-wget -q https://dist.torproject.org/tor-0.4.2.7.tar.gz && \
-tar zxf tor-0.4.2.7.tar.gz && \
-cd tor-0.4.2.7 && \
+wget -q https://dist.torproject.org/tor-0.4.3.5.tar.gz && \
+tar zxf tor-0.4.3.5.tar.gz && \
+cd tor-0.4.3.5 && \
 ./configure && \
 make && \
 make install && \

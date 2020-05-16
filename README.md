@@ -23,7 +23,7 @@ ExitPolicy reject *:*
 
 ## Optional settings
 
-Image taggerd `0.4.2.6` introduces some optional configuration parameters, that **will NOT work** with older images:
+Image taggerd `0.4.2.6` introduces some optional configuration parameters (available also in later versions), that **will NOT work** with older images:
 
 * Ability to open `ControlPort` on 9051/tcp - disabled by default
 * Ability to change `ExitPolicy` 
@@ -51,7 +51,7 @@ Please read the Tor documentation before changing exit policies!
 ## Build information
 
 * Base OS: Alpine LATEST (auto-rebuild on base image change - should always be current)
-* Tor version: [0.4.2.6](https://dist.torproject.org/tor-0.4.2.6.tar.gz) compiled from source
+* Tor version: [0.4.3.5](https://dist.torproject.org/tor-0.4.3.5.tar.gz) compiled from source
 * Image exposed ports: 
 	* 9050/tcp 
 	* 9051/tcp
