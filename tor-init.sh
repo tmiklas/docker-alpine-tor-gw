@@ -25,4 +25,5 @@ fi
 
 
 # switch to Tor process
+pproxy -r socks5://localhost:9050 &
 exec /usr/local/bin/tor -f /etc/tor/torrc

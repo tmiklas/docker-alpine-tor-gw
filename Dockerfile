@@ -1,6 +1,7 @@
 FROM alpine:latest
 MAINTAINER @tomaszmiklas
-RUN apk add --no-cache ca-certificates gcc build-base libevent-dev openssl-dev tar wget zlib-dev xz-dev xz-libs bash && \
+RUN apk add --no-cache ca-certificates gcc build-base libevent-dev openssl-dev tar wget zlib-dev xz-dev xz-libs bash py3-pip && \
+pip3 install pproxy && \
 cd /tmp && \
 wget -q https://dist.torproject.org/tor-0.4.3.5.tar.gz && \
 tar zxf tor-0.4.3.5.tar.gz && \
@@ -12,5 +13,5 @@ apk del --no-cache ca-certificates gcc build-base libevent-dev openssl-dev tar w
 apk add --no-cache libevent && \
 rm -rf /tmp/*
 ADD tor-init.sh /etc/tor/tor-init.sh
-EXPOSE 9050 9051 53/udp
+EXPOSE 8080 9050 9051 53/udp
 ENTRYPOINT ["/etc/tor/tor-init.sh"]

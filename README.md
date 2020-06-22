@@ -5,6 +5,7 @@ Tor gateway packaged into a Docker container.
 
 This container provides:
 
+* HTTP to Socks5 bridge on 8080/tcp
 * Socks5 proxy on 9050/tcp
 * DNS resolver on 53/udp
 * Does not provide any Tor hidden services
@@ -19,11 +20,13 @@ ExitPolicy reject *:*
 
 **Usage:**
 
-`$ docker run -d -p 9050:9050 -p 53:53/udp tmiklas/alpine-tor-gw`
+`$ docker run -d -p 9050:9050 -p 8080:8080 -p 53:53/udp tmiklas/alpine-tor-gw`
 
 ## Optional settings
 
-Image taggerd `0.4.2.6` introduces some optional configuration parameters (available also in later versions), that **will NOT work** with older images:
+Image tagged `0.4.3.5h` introduces HTTP to Socks5 bridge on port 8080/tcp. It is active by default, so all that is needed to expose it or use right away in container-to-container comms. This makes it trivial to use tools like `curl` or `wget` with Tor.
+
+Image tagged `0.4.2.6` introduces some optional configuration parameters (available also in later versions), that **will NOT work** with older images:
 
 * Ability to open `ControlPort` on 9051/tcp - disabled by default
 * Ability to change `ExitPolicy` 
