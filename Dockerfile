@@ -3,9 +3,9 @@ MAINTAINER @tomaszmiklas
 RUN apk add --no-cache ca-certificates gcc build-base libevent-dev openssl-dev tar wget zlib-dev xz-dev xz-libs bash py3-pip && \
 pip3 install pproxy && \
 cd /tmp && \
-wget -q https://dist.torproject.org/tor-0.4.4.5.tar.gz && \
-tar zxf tor-0.4.4.5.tar.gz && \
-cd tor-0.4.4.5 && \
+wget -q https://dist.torproject.org/tor-0.4.4.6.tar.gz && \
+tar zxf tor-0.4.4.6.tar.gz && \
+cd tor-0.4.4.6 && \
 ./configure && \
 make && \
 make install && \
