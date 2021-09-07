@@ -1,4 +1,4 @@
-name: Build and publish docker images
+name: Docker build and publish
 
 on:
   push:
@@ -8,6 +8,8 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    env:
+      IMAGE_BASE_NAME: alpine-tor-gw
     steps:
       -
         name: Checkout
@@ -31,26 +33,32 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - 
-        # Extract metadata (tags, labels) for Docker
-        # https://github.com/docker/metadata-action
-        name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       -
         # extract TAG value from commit
-        name: Set COMMIT_TAG
-        run: echo "COMMIT_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV && echo "TAG is $COMMIT_TAG"
+        name: Extract commit tag
+        run: echo "COMMIT_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV && echo "TAG is ${GITHUB_REF#refs/*/}"
       -
-        name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/alpine-tor-gw:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/alpine-tor-gw:${{ env.COMMIT_TAG }}
-            ghcr.io/${{ github.repository_owner }}/alpine-tor-gw:latest
-            ghcr.io/${{ github.repository_owner }}/alpine-tor-gw:${{ env.COMMIT_TAG }}
+        name: Build the Docker image
+        run: docker build . --file Dockerfile --tag ${{ env.IMAGE_BASE_NAME }}:${{ env.COMMIT_TAG }}
+      -
+        # let's try running some tests
+        name: Test Tor proxy working
+        run: |
+          docker run -d --name tor_${{ env.COMMIT_TAG }} -p 127.0.0.1:18080:8080 ${{ env.IMAGE_BASE_NAME }}:${{ env.COMMIT_TAG }}
+          sleep 15
+          IP1=`curl -s ip.me`
+          IP2=`all_proxy=http://localhost:18080 curl -s ip.me`
+          docker rm -f tor_${{ env.COMMIT_TAG }}
+          if [ $IP1 == $IP2 ]; then echo "Failed Tor test: Direct IP = $IP1, Tor IP = $IP2" && exit 1L; else echo "TEST PASS: Direct IP = $IP1, Tor IP = $IP2"; fi
+      -
+        name: Tag and push to registries
+        if: ${{ success() }}
+        run: |
+          docker tag ${{ env.IMAGE_BASE_NAME }}:${{ env.COMMIT_TAG }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_BASE_NAME }}:latest
+          docker tag ${{ env.IMAGE_BASE_NAME }}:${{ env.COMMIT_TAG }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_BASE_NAME }}:${{ env.COMMIT_TAG }}
+          docker tag ${{ env.IMAGE_BASE_NAME }}:${{ env.COMMIT_TAG }} ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_BASE_NAME }}:latest
+          docker tag ${{ env.IMAGE_BASE_NAME }}:${{ env.COMMIT_TAG }} ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_BASE_NAME }}:${{ env.COMMIT_TAG }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_BASE_NAME }}:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_BASE_NAME }}:${{ env.COMMIT_TAG }}
+          docker push ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_BASE_NAME }}:latest
+          docker push ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_BASE_NAME }}:${{ env.COMMIT_TAG }}
