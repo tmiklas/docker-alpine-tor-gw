@@ -1,4 +1,4 @@
-# docker-alpine-tor-gw
+# alpine-tor-gw
 Tor gateway packaged into a Docker container. 
 
 ## Configuration - defaults
@@ -21,6 +21,10 @@ ExitPolicy reject *:*
 **Usage:**
 
 `$ docker run -d -p 9050:9050 -p 8080:8080 -p 53:53/udp tmiklas/alpine-tor-gw`
+
+or
+
+`$ docker run -d -p 9050:9050 -p 8080:8080 -p 53:53/udp ghcr.io/tmiklas/alpine-tor-gw`
 
 ## Optional settings
 
@@ -53,8 +57,8 @@ Please read the Tor documentation before changing exit policies!
 
 ## Build information
 
-* Base OS: Alpine LATEST (auto-rebuild on base image change - should always be current)
-* Tor version: see [available tags](https://hub.docker.com/r/tmiklas/alpine-tor-gw/tags), compiled from source
+* Base OS: Alpine LATEST (at the time of the build; no automated re-builds at this moment)
+* Tor version: as per image tag, compiled from source (check [Docker Hub](https://hub.docker.com/r/tmiklas/alpine-tor-gw/tags) or [ghcr.io](https://github.com/tmiklas/docker-alpine-tor-gw/pkgs/container/alpine-tor-gw) for available tags)
 * Image exposed ports: 
 	* 8080/tcp
 	* 9050/tcp 
