@@ -65,5 +65,4 @@ Please read the Tor documentation before changing exit policies!
 	* 9051/tcp
 	* 53/udp
 
-
 EOT
