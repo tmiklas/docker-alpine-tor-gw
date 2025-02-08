@@ -1,5 +1,4 @@
 FROM alpine:latest
-MAINTAINER @tomaszmiklas
 RUN apk add --no-cache ca-certificates gcc build-base libevent-dev openssl-dev tar wget zlib-dev xz-dev xz-libs bash py3-pip && \
 pip3 install --break-system-packages pproxy && \
 cd /tmp && \
