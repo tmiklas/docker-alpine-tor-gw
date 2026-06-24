@@ -2,9 +2,9 @@ FROM alpine:latest
 RUN apk add --no-cache ca-certificates gcc build-base libevent-dev openssl-dev tar wget zlib-dev xz-dev xz-libs bash py3-pip && \
 pip3 install --break-system-packages pproxy && \
 cd /tmp && \
-wget -q https://dist.torproject.org/tor-0.4.9.9.tar.gz && \
-tar zxf tor-0.4.9.9.tar.gz && \
-cd tor-0.4.9.9 && \
+wget -q https://dist.torproject.org/tor-0.4.9.10.tar.gz && \
+tar zxf tor-0.4.9.10.tar.gz && \
+cd tor-0.4.9.10 && \
 ./configure && \
 make && \
 make install && \
